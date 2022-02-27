@@ -1,0 +1,14 @@
+# IDE Specific files
+/.vscode
+/.idea
+
+
+# C make files
+/build
+/CMakeFiles
+/cmake_install.cmake
+/CMakeCache.txt
+
+# Generate your own make files / executables
+/Makefile
+/tbf
