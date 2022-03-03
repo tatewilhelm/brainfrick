@@ -1,4 +1,11 @@
-#include "unistd.h"
+#ifndef ARGUMENTS_H
+#define ARGUMENTS_H
+
+#include <unistd.h>
+#include <stdbool.h>
+#include <string.h>
+#include <stdio.h>
+
 
 enum mode_t 
 {
@@ -21,3 +28,5 @@ struct arguments_t
 
 
 struct arguments_t lexicalize_args(int argc, char* argv[]);
+
+#endif

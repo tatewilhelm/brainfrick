@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "arguments.h"
+#include "interpreter.h"
 
 
 int main(int argc, char* argv[])
@@ -21,7 +22,6 @@ int main(int argc, char* argv[])
 
         case NO_ERROR:
             printf("tbf: No error has occured\n");
-            return 0;
         break;
 
         case INCOMPLETE_ARG:
@@ -44,10 +44,37 @@ int main(int argc, char* argv[])
 
     switch (arguments.mode)
     {
-    case INTERPRETED:
+        case INTERPRETED:
+            printf("Interpreted\n");
+            return interpret(arguments);
+            break;
+        case COMPILED:
+            printf("Compiled\n");
+            break;
 
-        break;
-    
-    
+        case C_TRANSPILE:
+            printf("C\n");
+            break;
+
+        case PYTHON_TRANSPILE:
+            printf("Python\n");
+            break;
+        default:
+            printf("Def\n");
+            break;
     }
+
+    switch (arguments.cell_size)
+    {
+        case 8:
+            printf("8\n");
+            break;
+        case 16:
+            printf("16\n");
+            break;
+        case 32:
+            printf("32\n");
+            break;
+    }
+    printf("%s\n", arguments.filepath);
 }

@@ -1,4 +1,9 @@
+#ifndef INTERPRETER_H
+#define INTERPRETER_h
+
 #include <stdio.h>
 #include "arguments.h"
 
-int inter_main(struct arguments_t arguments);
+int interpret(struct arguments_t arguments);
+
+#endif

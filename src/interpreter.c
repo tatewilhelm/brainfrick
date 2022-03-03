@@ -1,6 +1,6 @@
 #include "interpreter.h"
 
-int inter_main(struct arguments_t arguments)
+int interpret(struct arguments_t arguments)
 {
-    
+    return 0;
 }
