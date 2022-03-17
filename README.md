@@ -1,6 +1,6 @@
 # Brain Frick
 
-Brain Frick is an integrated interpreter, compiler, and transpiler integrated into one package.
+Brain Frick is an interpreter for the esoteric programming language, brainfuck.
 
 Brain Frick is designed for linux, and unix systems. (Try msys2 if your using Windows.)
 
