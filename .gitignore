@@ -3,7 +3,7 @@
 /.idea
 
 
-# C make files
+# CMake files
 /build
 /CMakeFiles
 /cmake_install.cmake
@@ -13,3 +13,6 @@
 # Generate your own make files / executables
 /Makefile
 /brainfrick
+
+# Make install files
+/install_manifest.txt
