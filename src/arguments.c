@@ -9,6 +9,7 @@ struct arguments_t lexicalize_args(int argc, char* argv[])
     arguments.error = UNSET_ERROR;
     arguments.cell_size = 8; // Default
     arguments.return_ending_cell = false;
+    arguments.infinite_cells = false;
 
     for (int i = 1; i < argc; i++)
     {
@@ -126,6 +127,10 @@ struct arguments_t lexicalize_args(int argc, char* argv[])
         } else if (strcmp(argument, "--returnEndingCell") == 0) {
 
             arguments.return_ending_cell = true;
+
+        } else if (strcmp(argument, "--infiniteCells") == 0) {
+
+            arguments.infinite_cells = true;
 
         } else {
 
