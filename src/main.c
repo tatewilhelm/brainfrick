@@ -50,7 +50,7 @@ int main(int argc, char* argv[])
         case INTERPRETED:
             return interpret(arguments);
         case HELP:
-            printf("brainfrick is a program used to interpret brainfuck programs.\n--help                Displays help menu\n--interpreted         Sets brainfrick to interpret the file specified\n--returnEndingCell    Returns the ending value of the cell pointed to, instead of the standard errno.\n");
+            printf("brainfrick is a program used to interpret brainfuck programs.\n--help                Displays help menu\n--interpret         Sets brainfrick to interpret the file specified\n--returnEndingCell    Returns the ending value of the cell pointed to, instead of the standard errno.\n");
             break;
     }
 
