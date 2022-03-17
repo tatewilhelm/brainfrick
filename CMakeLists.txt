@@ -5,4 +5,6 @@ project (brainfrick)
 include_directories(include)
 add_executable(brainfrick src/main.c src/arguments.c src/interpreter.c)
 
+install(TARGETS brainfrick DESTINATION bin)
+
 
