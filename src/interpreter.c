@@ -19,7 +19,16 @@ int interpret(struct arguments_t arguments)
 
 
     // Cells
-    uint8_t cells[30000];
+    size_t cells_size = 1; // Only used for infite cells mode
+    uint8_t *cells;
+
+    // Infinite cells dynamic array mode
+    if (arguments.infinite_cells) {
+        cells = calloc(cells_size, sizeof(uint8_t));
+    } else {
+        cells_size = STD_CELL_SIZE;
+        cells = calloc(STD_CELL_SIZE, sizeof(u_int8_t));
+    }
 
     // Points to current cell
     unsigned int cell_pointer = 0;
@@ -54,10 +63,25 @@ int interpret(struct arguments_t arguments)
             // Move Right
 
             // Underflow / overflow regulation
-            if (cell_pointer == sizeof(cells) - 1)
+            if (cell_pointer == cells_size - 1)
             {
-                printf("brainfrick: A Fatal Error has occured. Attempting to move cell pointer right when pointer is at maximum.\n");
-                return -1;
+                if (arguments.infinite_cells)
+                {
+                    cells_size++;
+                    cells = realloc(cells, cells_size * sizeof(uint8_t));
+                    if (cells == NULL)
+                    {
+                        printf("brainfrick: A Fatal Error has occured. Ran out of memory.\n");
+                        free(loop_stack);
+                        free(cells);
+                        return ENOMEM;
+                    }
+                } else {
+                    printf("brainfrick: A Fatal Error has occured. Attempting to move cell pointer right when pointer is at maximum.\n");
+                    free(loop_stack);
+                    free(cells);
+                    return -1;
+                }
             }
             cell_pointer++;
             break;
@@ -69,6 +93,8 @@ int interpret(struct arguments_t arguments)
             if (cell_pointer == 0)
             {
                 printf("brainfrick: A Fatal Error has occured. Attempting to move cell pointer left when pointer is 0.\n");
+                free(loop_stack);
+                free(cells);
                 return -1;
             }
             cell_pointer--;
@@ -92,6 +118,9 @@ int interpret(struct arguments_t arguments)
             loop_stack = realloc(loop_stack, loop_stack_size * sizeof(fpos_t));
             if (loop_stack == NULL)
             {
+                printf("brainfrick: A Fatal Error has occured. Ran out of memory.\n");
+                free(loop_stack);
+                free(cells);
                 return ENOMEM;
             }            
             fgetpos(file, &loop_stack[loop_stack_size]);
@@ -107,6 +136,9 @@ int interpret(struct arguments_t arguments)
                 loop_stack = realloc(loop_stack, loop_stack_size * sizeof(fpos_t));
                 if (loop_stack == NULL)
                 {
+                    printf("brainfrick: A Fatal Error has occured. Ran out of memory.\n");
+                    free(loop_stack);
+                    free(cells);
                     return ENOMEM;
                 }
             }
@@ -130,8 +162,12 @@ int interpret(struct arguments_t arguments)
 
     if (arguments.return_ending_cell)
     {
-        return cells[cell_pointer];
+        int ending_cell = cells[cell_pointer];
+        free(cells);
+        return ending_cell;
     }
+
+    free(cells);
 
     return 0;
 }

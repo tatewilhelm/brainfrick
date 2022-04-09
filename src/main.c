@@ -28,7 +28,7 @@ int main(int argc, char* argv[])
         break;
 
         case INVALID_ARG:
-            printf("brainfrick: A fatal error has occured. Invalid argument.\n");
+            printf("brainfrick: A fatal error has occured. Invalid argument\n");
             return EINVAL;
         break;
 
@@ -50,7 +50,7 @@ int main(int argc, char* argv[])
         case INTERPRETED:
             return interpret(arguments);
         case HELP:
-            printf("brainfrick is a program used to interpret brainfuck programs.\n--help                Displays help menu\n--interpret         Sets brainfrick to interpret the file specified\n--returnEndingCell    Returns the ending value of the cell pointed to, instead of the standard errno.\n");
+            printf("brainfrick is a program used to interpret brainfuck programs.\n--help                Displays help menu\n--interpret           Sets brainfrick to interpret the file specified\n--returnEndingCell    Returns the ending value of the cell pointed to, instead of the standard errno.\n--infiniteCells       Unlimited amount fo cells compared to the standard 30,000\n");
             break;
     }
 

@@ -8,7 +8,7 @@
 #include <errno.h>
 #include "arguments.h"
 
-
+#define STD_CELL_SIZE 30000
 int interpret(struct arguments_t arguments);
 
 #endif

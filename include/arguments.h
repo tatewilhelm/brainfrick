@@ -28,6 +28,7 @@ struct arguments_t
     enum mode_t mode;
     int cell_size; // 8, 16 or 32 bits
     bool return_ending_cell;
+    bool infinite_cells;
 };
 
 
