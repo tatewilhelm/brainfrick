@@ -72,10 +72,14 @@ int interpret(struct arguments_t arguments)
                     if (cells == NULL)
                     {
                         printf("brainfrick: A Fatal Error has occured. Ran out of memory.\n");
+                        free(loop_stack);
+                        free(cells);
                         return ENOMEM;
                     }
                 } else {
                     printf("brainfrick: A Fatal Error has occured. Attempting to move cell pointer right when pointer is at maximum.\n");
+                    free(loop_stack);
+                    free(cells);
                     return -1;
                 }
             }
@@ -89,6 +93,8 @@ int interpret(struct arguments_t arguments)
             if (cell_pointer == 0)
             {
                 printf("brainfrick: A Fatal Error has occured. Attempting to move cell pointer left when pointer is 0.\n");
+                free(loop_stack);
+                free(cells);
                 return -1;
             }
             cell_pointer--;
@@ -113,6 +119,8 @@ int interpret(struct arguments_t arguments)
             if (loop_stack == NULL)
             {
                 printf("brainfrick: A Fatal Error has occured. Ran out of memory.\n");
+                free(loop_stack);
+                free(cells);
                 return ENOMEM;
             }            
             fgetpos(file, &loop_stack[loop_stack_size]);
@@ -129,6 +137,8 @@ int interpret(struct arguments_t arguments)
                 if (loop_stack == NULL)
                 {
                     printf("brainfrick: A Fatal Error has occured. Ran out of memory.\n");
+                    free(loop_stack);
+                    free(cells);
                     return ENOMEM;
                 }
             }
@@ -152,7 +162,9 @@ int interpret(struct arguments_t arguments)
 
     if (arguments.return_ending_cell)
     {
-        return cells[cell_pointer];
+        int ending_cell = cells[cell_pointer];
+        free(cells);
+        return ending_cell;
     }
 
     free(cells);
