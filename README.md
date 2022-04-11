@@ -10,7 +10,14 @@ Brain Frick is designed for linux, and unix systems. (Try msys2 if your using Wi
 
 To install brainfrick, you must have `gcc`, `make`, `cmake`, and `git` installed.
 
-Run the following commands to install brainfrick to your system.
+Run the following command to install brainfrick to your system.
+
+```
+curl -ss https://www.github.com/tatewilhelm/brainfrick/install.sh | sudo bash
+```
+
+Or you can manually run the compilation using the following commands:
+
 ```
 # Download
 git clone https://github.com/tatewilhelm/brainfrick
