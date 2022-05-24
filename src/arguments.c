@@ -5,11 +5,14 @@ struct arguments_t lexicalize_args(int argc, char* argv[])
     struct arguments_t arguments;
     bool file_set = false;
 
-
+    arguments.mode = UNSET_MODE;
     arguments.error = UNSET_ERROR;
     arguments.cell_size = 8; // Default
     arguments.return_ending_cell = false;
     arguments.infinite_cells = false;
+    arguments.output_filepath = "";
+    arguments.specified_output_filepath = false;
+
 
     for (int i = 1; i < argc; i++)
     {
@@ -42,36 +45,50 @@ struct arguments_t lexicalize_args(int argc, char* argv[])
                 arguments.error = FILE_DOESNT_EXIST;
             }
 
-            
-            
-        // } else if (strcmp(argument, "--transpile") == 0 || strcmp("-t", argument) == 0) {
-        //     if (arguments.mode != UNSET_MODE)
-        //     {
-        //         arguments.error = INCOMPATIBLE_ARG;
-        //         return arguments;
-        //     }
-            
-        //     i++;
+        } else if (strcmp(argument, "--output") == 0 || strcmp("-o", argument) == 0) {
+            i++;
         
-        //     // Prevent Segmentation fault
-        //     if (i == argc)
-        //     {
-        //         arguments.error = INCOMPLETE_ARG;
-        //         return arguments;
-        //     }
+            // Prevent Segmentation fault
+            if (i == argc)
+            {
+                arguments.error = INCOMPLETE_ARG;
+                return arguments;
+            }
 
-        //     char* suffix = argv[i];
+            
 
-        //     // Detemine Language
-        //     if (strcmp("python", suffix) == 0)
-        //     {
-        //         arguments.mode = PYTHON_TRANSPILE;
-        //     } else if (strcmp("c", suffix) == 0) {
-        //         arguments.mode = C_TRANSPILE;
-        //     } else {
-        //         arguments.error = INCOMPLETE_ARG;
-        //         return arguments;
-        //     }
+            arguments.specified_output_filepath = true;
+            arguments.output_filepath = argv[i];
+        
+            
+        } else if (strcmp(argument, "--transpile") == 0 || strcmp("-t", argument) == 0) {
+            if (arguments.mode != UNSET_MODE)
+            {
+                arguments.error = INCOMPATIBLE_ARG;
+                return arguments;
+            }
+            
+            i++;
+        
+            // Prevent Segmentation fault
+            if (i == argc)
+            {
+                arguments.error = INCOMPLETE_ARG;
+                return arguments;
+            }
+
+            char* suffix = argv[i];
+
+            // Detemine Language
+            if (strcmp("python", suffix) == 0)
+            {
+                arguments.mode = PYTHON_TRANSPILE;
+            } else if (strcmp("c", suffix) == 0) {
+                arguments.mode = C_TRANSPILE;
+            } else {
+                arguments.error = INCOMPLETE_ARG;
+                return arguments;
+            }
 
         } else if ((strcmp(argument, "--interpret") == 0) || (strcmp("-i", argument) == 0)) {
 
@@ -124,11 +141,11 @@ struct arguments_t lexicalize_args(int argc, char* argv[])
 
             arguments.mode = HELP;
 
-        } else if (strcmp(argument, "--returnEndingCell") == 0) {
+        } else if (strcmp(argument, "--return-ending-cell") == 0) {
 
             arguments.return_ending_cell = true;
 
-        } else if (strcmp(argument, "--infiniteCells") == 0) {
+        } else if (strcmp(argument, "--infinite-cells") == 0) {
 
             arguments.infinite_cells = true;
 
@@ -149,11 +166,16 @@ struct arguments_t lexicalize_args(int argc, char* argv[])
     // Check if file was set if the mode is intepreted or another mode files are nessecary for.
     if (!file_set)
     {
-        if (arguments.mode == INTERPRETED) 
+        if (arguments.mode == INTERPRETED || arguments.mode == PYTHON_TRANSPILE) 
         {
             arguments.error = NO_FILE;
             return arguments;
         }
+    }
+
+    if (!arguments.specified_output_filepath)
+    {
+        arguments.output_filepath = "a";
     }
 
     

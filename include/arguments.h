@@ -24,11 +24,14 @@ enum error_t
 struct arguments_t
 {
     char* filepath;
+    char* output_filepath;
+    bool specified_output_filepath;
     enum error_t error;
     enum mode_t mode;
     int cell_size; // 8, 16 or 32 bits
     bool return_ending_cell;
     bool infinite_cells;
+    
 };
 
 

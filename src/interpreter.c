@@ -9,7 +9,7 @@ int interpret(struct arguments_t arguments)
     FILE* file = fopen(arguments.filepath, "r");
     if (fopen(arguments.filepath, "r") == NULL)
     {
-        printf("brainfrick: A fatal error has occured. File does not exist when attempting interpreted read.\n");
+        printf("brainfrick: A fataal error has occured. File does not exist when attempting interpreted read.\n");
         return -1;
     }
 
