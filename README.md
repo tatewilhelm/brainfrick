@@ -13,7 +13,7 @@ To install brainfrick, you must have `gcc`, `make`, `cmake`, and `git` installed
 Run the following command to install brainfrick to your system.
 
 ```
-curl -ss https://www.github.com/tatewilhelm/brainfrick/install.sh | sudo bash
+curl -ss https://raw.githubusercontent.com/tatewilhelm/brainfrick/master/install.sh | sudo bash
 ```
 
 Or you can manually run the compilation using the following commands:
