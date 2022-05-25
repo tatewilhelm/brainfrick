@@ -2,7 +2,11 @@
 
 int transpile_python(struct arguments_t arguments)
 {
-    printf("%s...", arguments.output_filepath);
+    if (!arguments.specified_output_filepath)
+    {
+        arguments.output_filepath = "a.py";
+    }
+    printf("Writing to %s...\n", arguments.output_filepath);
     FILE* file = fopen(arguments.filepath, "r");
     FILE* output_file = fopen(arguments.output_filepath, "w");
     if (fopen(arguments.filepath, "r") == NULL || fopen(arguments.output_filepath, "w") == NULL)
@@ -16,6 +20,8 @@ int transpile_python(struct arguments_t arguments)
         printf("brainfrick: A fatal error has occured. Unlimited Cells is not supported by transpiling.\n");
         return -1;
     }
+
+    
 
     bool exit = false;
     char program;
@@ -158,6 +164,11 @@ int transpile_python(struct arguments_t arguments)
             {
                 fputc('\t', output_file);
             }
+            fputs("\tinp = inp + \'\\n\'\n", output_file);
+            for (int i = 0; i < loop_level; i++)
+            {
+                fputc('\t', output_file);
+            }
             fputs("\ti = 0\n", output_file);
             for (int i = 0; i < loop_level; i++)
             {
@@ -174,7 +185,12 @@ int transpile_python(struct arguments_t arguments)
                 fputc('\t', output_file);
             }
             fputs("\t\ti = i + 1\n", output_file);
-
+            for (int i = 0; i < loop_level; i++)
+            {
+                fputc('\t', output_file);
+            }
+            fputs("\tcells[cell_ptr] = ord(input_queue.pop(0))\n", output_file);
+            
             // If still characters in input queue
             for (int i = 0; i < loop_level; i++)
             {
