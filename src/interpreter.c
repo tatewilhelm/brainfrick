@@ -113,17 +113,47 @@ int interpret(struct arguments_t arguments)
         case '[':   
             // Beginning of loop
 
-            // Push position to the stack
-            loop_stack_size++;
-            loop_stack = realloc(loop_stack, loop_stack_size * sizeof(fpos_t));
-            if (loop_stack == NULL)
+            if (cells[cell_pointer] != 0)
             {
-                printf("brainfrick: A Fatal Error has occured. Ran out of memory.\n");
-                free(loop_stack);
-                free(cells);
-                return ENOMEM;
-            }            
-            fgetpos(file, &loop_stack[loop_stack_size]);
+                // Push position to the stack
+                loop_stack_size++;
+                loop_stack = realloc(loop_stack, loop_stack_size * sizeof(fpos_t));
+                if (loop_stack == NULL)
+                {
+                    printf("brainfrick: A Fatal Error has occured. Ran out of memory.\n");
+                    free(loop_stack);
+                    free(cells);
+                    return ENOMEM;
+                }            
+                fgetpos(file, &loop_stack[loop_stack_size]);
+            } else {
+                // Keep going till we reach a ] of the same level
+
+                bool end_found = false;
+                int loop_level = 0;
+                while (!end_found)
+                {
+                    switch (fgetc(file)) 
+                    {
+                        case '[':
+                            loop_level++;
+                        break;
+                        case ']':
+                            if (loop_level == 0)
+                            {
+                                end_found = true;
+                            } else {
+                                loop_level--;
+                            }
+                        break;
+                        case EOF:
+                            printf("brainfrick: A Fatal Error has occured. Unexpected end of file.\n");
+                            return -1;
+                        break;
+
+                    }
+                }
+            }
             break;
 
         case ']':
