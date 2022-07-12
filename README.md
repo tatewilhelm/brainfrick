@@ -41,8 +41,10 @@ rm -rf brainfrick
 | Argument                    | Shortened Argument    | Description                                              |
 | --------------------------- | --------------------- | -------------------------------------------------------- |
 | `/path/to/file.bf`          | NONE                  | The file opened                                          |
-| `--interpret`               | `-i`                  | Interpret files(default)                                 |      
+| `--interpret`               | `-i`                  | Interpret files (default)                                 |      
 | `--transpile python`           | `-t python`                  | Converts the file into a Python 3 file |
+| `--transpile c`           | `-t c`                 | Converts the file into a C99 file |
+| `--compile`           | `-c`                  | Compiles the file into a executable using `gcc` (The C compiler can be changed in constants.h) |
 | `--help`                    | `-h`                  | Shows help menu                                          |
 | `--return-ending-cell`        | NONE                  | Returns the ending cells value instead of the ERRNO      |
 | `--infinite-cells`           | NONE                  | Infinite amount of cells compared to the standard 30,000 |

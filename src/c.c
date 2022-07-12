@@ -185,4 +185,6 @@ int transpile_c(struct arguments_t arguments)
     fclose(file);
     fclose(output_file);
 
+    return 0;
+
 }

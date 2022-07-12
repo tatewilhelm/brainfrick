@@ -6,7 +6,6 @@ int transpile_python(struct arguments_t arguments)
     {
         arguments.output_filepath = "a.py";
     }
-    printf("Writing to %s...\n", arguments.output_filepath);
     FILE* file = fopen(arguments.filepath, "r");
     FILE* output_file = fopen(arguments.output_filepath, "w");
     if (fopen(arguments.filepath, "r") == NULL || fopen(arguments.output_filepath, "w") == NULL)

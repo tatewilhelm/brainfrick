@@ -61,7 +61,7 @@ int main(int argc, char* argv[])
             return compile(arguments);
             break;
         case HELP:
-            printf("brainfrick is a program used to interpret brainfuck programs.\n--help                Displays help menu\n--interpret           Sets brainfrick to interpret the file specified\n--returnEndingCell    Returns the ending value of the cell pointed to, instead of the standard errno.\n--infiniteCells       Unlimited amount fo cells compared to the standard 30,000\n");
+            printf("brainfrick is a program used to run brainfuck programs.\n--help                Displays help menu\n--interpret           Sets brainfrick to interpret the file specified\n--transpile c         Converts the file into a C99 file\n--transpile python    Converts the file into a Python 3 file\n--compile             Compiles the file into an executable using GCC\n--returnEndingCell    Returns the ending value of the cell pointed to, instead of the standard errno\n--infiniteCells       Unlimited amount of cells compared to the standard 30,000\n");
             break;
         default:
             printf("brainfrick: A fatal error has occured. Internal Unset Mode.\n");
