@@ -12,7 +12,7 @@ struct arguments_t lexicalize_args(int argc, char* argv[])
     arguments.infinite_cells = false;
     arguments.output_filepath = "";
     arguments.specified_output_filepath = false;
-
+    arguments.interpret_mode = UNSET_INTERPRET_MODE;
 
     for (int i = 1; i < argc; i++)
     {
@@ -100,7 +100,35 @@ struct arguments_t lexicalize_args(int argc, char* argv[])
 
             arguments.mode = INTERPRETED;
 
-        // } else if ((strcmp(argument, "--cli") == 0) || (strcmp("-l", argument) == 0)) {
+        } else if ((strcmp(argument, "--compile") == 0) || (strcmp("-c", argument) == 0)) {
+
+            if (arguments.mode != UNSET_MODE)
+            {
+                arguments.error = INCOMPATIBLE_ARG;
+                return arguments;
+            }
+
+            arguments.mode = COMPILED;
+
+        } else if (strcmp(argument, "--read-char") == 0) {
+
+            if (arguments.interpret_mode != UNSET_INTERPRET_MODE)
+            {
+                arguments.error = INCOMPATIBLE_ARG;
+                return arguments;
+            }
+
+            arguments.interpret_mode = CHAR_FILE;
+        } else if (strcmp(argument, "--read-once") == 0) {
+
+            if (arguments.interpret_mode != UNSET_INTERPRET_MODE)
+            {
+                arguments.error = INCOMPATIBLE_ARG;
+                return arguments;
+            }
+
+            arguments.interpret_mode = READ_ONCE;
+        // } else if (ead_(strcmp(argument, "--cli") == 0) || (strcmp("-l", argument) == 0)) {
 
         //     if (arguments.mode != UNSET_MODE)
         //     {
@@ -163,10 +191,20 @@ struct arguments_t lexicalize_args(int argc, char* argv[])
         arguments.mode = INTERPRETED;
     }
 
+    if (arguments.mode == INTERPRETED)
+    {
+        // Enforce default interpretation mode
+        if (arguments.interpret_mode == UNSET_INTERPRET_MODE)
+        {
+            arguments.interpret_mode = CHAR_FILE;
+        }
+    }
+    
+
     // Check if file was set if the mode is intepreted or another mode files are nessecary for.
     if (!file_set)
     {
-        if (arguments.mode == INTERPRETED || arguments.mode == PYTHON_TRANSPILE) 
+        if (arguments.mode == INTERPRETED || arguments.mode == PYTHON_TRANSPILE || arguments.mode == C_TRANSPILE) 
         {
             arguments.error = NO_FILE;
             return arguments;

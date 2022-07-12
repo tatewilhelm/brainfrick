@@ -20,6 +20,13 @@ enum error_t
     PATH_IS_DIRECTORY
 };
 
+enum interpret_mode_t
+{
+    // CHAR FILE reads a char from a file every cycle, slow but best for extremely large files or systems with low memory
+    // READ_ONCE reads the entire file at the start, not reccomended for systems with extremely low memory but fastest
+    UNSET_INTERPRET_MODE, READ_ONCE, CHAR_FILE
+};
+
 
 struct arguments_t
 {
@@ -28,6 +35,8 @@ struct arguments_t
     bool specified_output_filepath;
     enum error_t error;
     enum mode_t mode;
+    enum interpret_mode_t interpret_mode;
+    int string_read_buffer_size;
     int cell_size; // 8, 16 or 32 bits
     bool return_ending_cell;
     bool infinite_cells;

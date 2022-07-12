@@ -3,4 +3,4 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int transpile_python(struct arguments_t arguments);
+int transpile_c(struct arguments_t arguments);
